@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pseudogene/lamp-virus.svg?branch=master)](https://travis-ci.org/pseudogene/lamp-virus)
+
 #lamp-virus
 
 We foster the openness, integrity, and reproducibility of scientific research.
