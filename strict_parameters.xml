@@ -1,0 +1,33 @@
+<option_set>
+  <signature_max_length>200</signature_max_length>
+  <loop_min_gap>20</loop_min_gap>
+  <max_poly_bases>4</max_poly_bases>
+
+  <outer_primer_target_length>20</outer_primer_target_length>
+  <outer_primer_min_length>15</outer_primer_min_length>
+  <outer_primer_max_length>25</outer_primer_max_length>
+  <outer_primer_target_tm>60.0</outer_primer_target_tm>
+  <outer_primer_min_tm>53.0</outer_primer_min_tm>
+  <outer_primer_max_tm>67.0</outer_primer_max_tm>
+
+  <middle_primer_target_length>20</middle_primer_target_length>
+  <middle_primer_min_length>15</middle_primer_min_length>
+  <middle_primer_max_length>25</middle_primer_max_length>
+  <middle_primer_target_tm>60.0</middle_primer_target_tm>
+  <middle_primer_min_tm>53.0</middle_primer_min_tm>
+  <middle_primer_max_tm>67.0</middle_primer_max_tm>
+
+  <inner_primer_target_length>20</inner_primer_target_length>
+  <inner_primer_min_length>15</inner_primer_min_length>
+  <inner_primer_max_length>25</inner_primer_max_length>
+  <inner_primer_target_tm>65.0</inner_primer_target_tm>
+  <inner_primer_min_tm>58.0</inner_primer_min_tm>
+  <inner_primer_max_tm>72.0</inner_primer_max_tm>
+
+  <loop_primer_target_length>20</loop_primer_target_length>
+  <loop_primer_min_length>15</loop_primer_min_length>
+  <loop_primer_max_length>25</loop_primer_max_length>
+  <loop_primer_target_tm>62.0</loop_primer_target_tm>
+  <loop_primer_min_tm>55.0</loop_primer_min_tm>
+  <loop_primer_max_tm>69.0</loop_primer_max_tm>
+</option_set>
