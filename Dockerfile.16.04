@@ -36,7 +36,7 @@ RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" >> /etc/apt/sour
 RUN apt-get update
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y git wget unzip dos2unix
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y git wget unzip
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y r-base tk tk-dev gfortran
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y libblas-dev liblapack-dev bioperl libgd-dev libgd-perl
 
@@ -45,15 +45,14 @@ RUN perl -MCPAN -e 'install Bio::Graphics'
 
 RUN wget https://sourceforge.net/projects/primer3/files/primer3/2.3.7/primer3-2.3.7.tar.gz -O primer3-2.3.7.tar.gz  && \
     tar xfz primer3-2.3.7.tar.gz && \
-    sed -i -e 's,/opt/primer3_config,/usr/local/share/primer3/primer3_config,g' primer3-2.3.7/src/primer3_boulder_main.c && \
+    sed -i -e 's,/opt/primer3_config,/etc/primer3_config,g' primer3-2.3.7/src/primer3_boulder_main.c && \
     make -C primer3-2.3.7/src && \
-    install primer3-2.3.7/src/primer3_core /usr/local/bin/ && \
-    install primer3-2.3.7/src/ntdpal /usr/local/bin/ && \
-    install primer3-2.3.7/src/ntthal /usr/local/bin/ && \
-    install primer3-2.3.7/src/oligotm /usr/local/bin/ && \
-    install primer3-2.3.7/src/long_seq_tm_test /usr/local/bin/ && \
-    mkdir -p /usr/local/share/primer3/ && \
-    cp -r primer3-2.3.7/src/primer3_config /usr/local/share/primer3/primer3_config && \
+    install primer3-2.3.7/src/primer3_core /usr/bin/ && \
+    install primer3-2.3.7/src/ntdpal /usr/bin/ && \
+    install primer3-2.3.7/src/ntthal /usr/bin/ && \
+    install primer3-2.3.7/src/oligotm /usr/bin/ && \
+    install primer3-2.3.7/src/long_seq_tm_test /usr/bin/ && \
+    cp -r primer3-2.3.7/src/primer3_config /etc/primer3_config && \
     rm -rf primer3-2.3.7.tar.gz primer3-2.3.7
 
 RUN wget http://bioinfo.unl.edu/downloads/GramAlign3_00.zip -O GramAlign3_00.zip && \
@@ -70,8 +69,7 @@ RUN Rscript -e "install.packages('ape', repos='http://cran.rstudio.com', depende
 RUN cd /opt && git clone https://github.com/pseudogene/lava-dna.git && \
     cd lava-dna && perl Makefile.PL && cd .. && \
     make -C lava-dna && \
-    make -C lava-dna -k install && \
-    dos2unix lava-dna/*.pl
+    make -C lava-dna -k install
 
 RUN mv /opt/lava-dna/t_data/loose_parameters.xml  /opt/lava-dna/t_data/looser_parameters.xml && \
     mv /opt/lava-dna/t_data/normal_parameters.xml /opt/lava-dna/t_data/loose_parameters.xml && \
