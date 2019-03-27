@@ -2,7 +2,7 @@
 # This file is part of lamp-virus. It provides the installation rules and commands to
 # build a Docker image
 #
-# Copyright (C) 2016, Michaël Bekaert <michael.bekaert@stir.ac.uk>
+# Copyright (C) 2016-2018, Michaël Bekaert <michael.bekaert@stir.ac.uk>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,11 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER Michael Bekaert <michael.bekaert@stir.ac.uk>
 
-LABEL description="LAMP-VIRUS Docker" version="1.0" Vendor="Institute of Aquaculture, University of Stirling"
-ENV DOCKERVERSION 1.0
+LABEL description="LAMP-VIRUS Docker" version="1.1" Vendor="Institute of Aquaculture, University of Stirling"
+ENV DOCKERVERSION 1.1
 
 USER root
 
@@ -30,30 +30,13 @@ COPY class_sequences.pl /usr/local/bin/class_sequences.pl
 COPY collect_genomevirus.pl /usr/local/bin/collect_genomevirus.pl
 COPY map_lamp.pl /usr/local/bin/map_lamp.pl
 
-RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" >> /etc/apt/sources.list && \
-    gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9 && \
-    gpg -a --export E084DAB9 | apt-key add -
 RUN apt-get update
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y git wget unzip
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential git wget unzip
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y r-base tk tk-dev gfortran
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y libblas-dev liblapack-dev bioperl libgd-dev libgd-perl
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y primer3 libblas-dev liblapack-dev bioperl libgd-dev libgd-perl
 
 RUN perl -MCPAN -e 'my $c = "CPAN::HandleConfig"; $c->load(doit => 1, autoconfig => 1); $c->edit(prerequisites_policy => "follow"); $c->edit(build_requires_install_policy => "yes"); $c->commit'
 RUN perl -MCPAN -e 'install Bio::Graphics'
-
-RUN wget https://sourceforge.net/projects/primer3/files/primer3/2.3.7/primer3-2.3.7.tar.gz -O primer3-2.3.7.tar.gz  && \
-    tar xfz primer3-2.3.7.tar.gz && \
-    sed -i -e 's,/opt/primer3_config,/etc/primer3_config,g' primer3-2.3.7/src/primer3_boulder_main.c && \
-    make -C primer3-2.3.7/src && \
-    install primer3-2.3.7/src/primer3_core /usr/bin/ && \
-    install primer3-2.3.7/src/ntdpal /usr/bin/ && \
-    install primer3-2.3.7/src/ntthal /usr/bin/ && \
-    install primer3-2.3.7/src/oligotm /usr/bin/ && \
-    install primer3-2.3.7/src/long_seq_tm_test /usr/bin/ && \
-    cp -r primer3-2.3.7/src/primer3_config /etc/primer3_config && \
-    rm -rf primer3-2.3.7.tar.gz primer3-2.3.7
 
 RUN wget http://bioinfo.unl.edu/downloads/GramAlign3_00.zip -O GramAlign3_00.zip && \
     unzip GramAlign3_00.zip && \
